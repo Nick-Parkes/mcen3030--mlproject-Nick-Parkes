@@ -2,7 +2,6 @@
 **Author:** Nick Parkes  
 **Course:** MCEN 3030  
 
-
 ---
 
 ## Problem Description
@@ -13,7 +12,7 @@ The dataset contains 7,409 time-series readings with 19 sensor features and appr
 
 ---
 
- — Initial Prompt
+##  — Initial Prompt
 
 The following prompt was used to begin the LLM-assisted design process:
 
@@ -21,9 +20,9 @@ The following prompt was used to begin the LLM-assisted design process:
 
 ---
 
- ##— Method: Random Forest
+##  — Method: Random Forest
 
-The LLM recommended a **Random Forest classifier**.
+The LLM recommended a **Random Forest classifier**. Below is a summary of the method and why it is appropriate for this problem.
 
 ### What is a Decision Tree?
 A decision tree works like a flowchart. At each node, it asks a yes/no question about a feature — for example, "Is Current_J2 > 4.2 amps?" — and splits the data accordingly. It keeps splitting until it reaches a final prediction. A single tree is powerful but tends to **overfit**, meaning it memorizes the training data and performs poorly on new data.
@@ -49,7 +48,7 @@ The data is randomly divided 80% for training and 20% for validation. The model 
 
 ---
 
-##— Model 1: Baseline
+##  — Model 1: Baseline
 
 ### Code
 See `/code_1/Code_1ML_Project.m`
@@ -75,7 +74,7 @@ This is a classic **class imbalance problem**. The dataset has approximately 1,3
 
 ---
 
-— Model 2: Tuned
+##  — Model 2: Tuned
 
 ### Prompts & LLM Discussion
 After reviewing the Model 1 confusion matrix, the following was discussed with the LLM:
@@ -115,7 +114,7 @@ Normal accuracy dropped from 100% to 76.7%, meaning some normal readings are now
 
 ---
 
-##— Feature Importance
+##  — Feature Importance
 
 ### Feature Importance Plot
 ![Feature Importance Model 2](code_2/ImportanceFeature2.png)
