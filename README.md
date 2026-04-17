@@ -1,7 +1,7 @@
 # Robot Fault Prediction - MCEN 3030 ML Project
 **Author:** Nick Parkes  
 **Course:** MCEN 3030  
-**Dataset:** dataset_02052023.xlsx — Robot sensor time series data (current, temperature, speed across 6 joints)
+
 
 ---
 
@@ -13,7 +13,7 @@ The dataset contains 7,409 time-series readings with 19 sensor features and appr
 
 ---
 
-## Deliverable 1 — Initial Prompt
+ — Initial Prompt
 
 The following prompt was used to begin the LLM-assisted design process:
 
@@ -21,9 +21,9 @@ The following prompt was used to begin the LLM-assisted design process:
 
 ---
 
-## Deliverable 2 — Method: Random Forest
+ — Method: Random Forest
 
-The LLM recommended a **Random Forest classifier**. Below is a summary of the method and why it is appropriate for this problem.
+The LLM recommended a **Random Forest classifier**.
 
 ### What is a Decision Tree?
 A decision tree works like a flowchart. At each node, it asks a yes/no question about a feature — for example, "Is Current_J2 > 4.2 amps?" — and splits the data accordingly. It keeps splitting until it reaches a final prediction. A single tree is powerful but tends to **overfit**, meaning it memorizes the training data and performs poorly on new data.
@@ -49,7 +49,7 @@ The data is randomly divided 80% for training and 20% for validation. The model 
 
 ---
 
-## Deliverable 3 — Model 1: Baseline
+— Model 1: Baseline
 
 ### Code
 See `/code_1/Code_1ML_Project.m`
@@ -75,7 +75,7 @@ This is a classic **class imbalance problem**. The dataset has approximately 1,3
 
 ---
 
-## Deliverable 4 — Model 2: Tuned
+— Model 2: Tuned
 
 ### Prompts & LLM Discussion
 After reviewing the Model 1 confusion matrix, the following was discussed with the LLM:
