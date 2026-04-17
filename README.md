@@ -21,7 +21,7 @@ The following prompt was used to begin the LLM-assisted design process:
 
 ---
 
- — Method: Random Forest
+ ##— Method: Random Forest
 
 The LLM recommended a **Random Forest classifier**.
 
@@ -49,7 +49,7 @@ The data is randomly divided 80% for training and 20% for validation. The model 
 
 ---
 
-— Model 1: Baseline
+##— Model 1: Baseline
 
 ### Code
 See `/code_1/Code_1ML_Project.m`
@@ -115,7 +115,7 @@ Normal accuracy dropped from 100% to 76.7%, meaning some normal readings are now
 
 ---
 
-## Deliverable 5 — Feature Importance
+##— Feature Importance
 
 ### Feature Importance Plot
 ![Feature Importance Model 2](code_2/ImportanceFeature2.png)
