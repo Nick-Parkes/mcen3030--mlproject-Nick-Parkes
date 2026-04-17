@@ -1,7 +1,7 @@
 # Robot Fault Prediction - MCEN 3030 ML Project
 **Author:** Nick Parkes  
 **Course:** MCEN 3030  
-**Dataset:** provided by MCEN 3030 course
+**Dataset:** Provided by MCEN 3030 course
 ---
 
 ## Problem Description
