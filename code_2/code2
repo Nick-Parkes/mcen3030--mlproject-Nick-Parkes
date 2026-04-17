@@ -1,1 +1,89 @@
+%% Robot Fault Prediction - Random Forest Classifier (Model 2 - Tuned)
 
+%% Load Data
+data = readtable('dataset_02052023.xlsx');
+
+%% Clean - Remove rows with NaNs
+data = rmmissing(data);
+
+%% Build Fault Target
+faultLabel = zeros(height(data), 1);
+faultLabel(data.Robot_ProtectiveStop == true) = 1;
+faultLabel(data.grip_lost == true) = 2;
+y = categorical(faultLabel, [0,1,2], {'Normal','Shutdown','GripLost'});
+
+%% Define Features
+featureNames = {'Current_J0','Temperature_T0','Current_J1','Temperature_J1', ...
+                'Current_J2','Temperature_J2','Current_J3','Temperature_J3', ...
+                'Current_J4','Temperature_J4','Current_J5','Temperature_J5', ...
+                'Speed_J0','Speed_J1','Speed_J2','Speed_J3','Speed_J4','Speed_J5', ...
+                'Tool_current'};
+
+X = data{:, featureNames};
+
+%% Trend Features - larger window captures fault buildup better
+windowSize = 15;
+
+roll_mean = movmean(X, windowSize);
+roll_std  = movstd(X,  windowSize);
+slope     = [zeros(1, size(X,2)); diff(X)];
+
+X_full = [X, roll_mean, roll_std, slope];
+
+%% Feature Names
+trendNames = @(prefix) cellfun(@(n) [prefix n], featureNames, 'UniformOutput', false);
+allFeatureNames = [featureNames, trendNames('mean_'), trendNames('std_'), trendNames('slope_')];
+
+%% Train/Validation Split (80/20)
+rng(42);
+n        = size(X_full, 1);
+idx      = randperm(n);
+splitIdx = floor(0.8 * n);
+
+X_train = X_full(idx(1:splitIdx), :);
+X_val   = X_full(idx(splitIdx+1:end), :);
+
+y_train = cellstr(y(idx(1:splitIdx)));
+y_val   = cellstr(y(idx(splitIdx+1:end)));
+
+%% Class Imbalance - Aggressive Cost Matrix
+% Order: GripLost, Normal, Shutdown
+costMatrix = [0   50  50;   % true GripLost: very high penalty for missing
+              1    0   1;   % true Normal: low penalty
+              50  50   0];  % true Shutdown: very high penalty for missing
+
+%% Train Random Forest (Tuned)
+model = TreeBagger(200, X_train, y_train, ...
+    'Method',                'classification', ...
+    'MaxNumSplits',          50,  ...
+    'MinLeafSize',           1,   ...
+    'NumPredictorsToSample', 8,   ...
+    'Cost',                  costMatrix, ...
+    'OOBPredictorImportance','on');
+
+%% Predict
+y_pred = categorical(predict(model, X_val));
+y_val  = categorical(y_val);
+
+%% Confusion Matrix
+figure;
+cm = confusionchart(y_val, y_pred);
+cm.Title = 'Robot Fault Confusion Matrix - Model 2 (Tuned)';
+cm.RowSummary    = 'row-normalized';
+cm.ColumnSummary = 'column-normalized';
+saveas(gcf, 'confusion_matrix_2.png');
+
+%% Accuracy
+accuracy = sum(y_pred == y_val) / numel(y_val);
+fprintf('Validation Accuracy: %.2f%%\n', accuracy * 100);
+
+%% Feature Importance
+figure;
+imp = model.OOBPermutedPredictorDeltaError;
+bar(imp);
+xticks(1:length(allFeatureNames));
+xticklabels(allFeatureNames);
+xtickangle(45);
+title('Feature Importance - Model 2 (Tuned)');
+ylabel('OOB Permuted Predictor Delta Error');
+saveas(gcf, 'feature_importance_2.png');
