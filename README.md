@@ -1,7 +1,7 @@
 # Robot Fault Prediction - MCEN 3030 ML Project
 **Author:** Nick Parkes  
 **Course:** MCEN 3030  
-
+**Dataset:** dataset_02052023.xlsx — Robot sensor time series data (current, temperature, speed across 6 joints)
 
 ---
 
@@ -17,7 +17,7 @@ The dataset contains 7,409 time-series readings with 19 sensor features and appr
 
 The following prompt was used to begin the LLM-assisted design process:
 
-> *"I have a dataset from a robotic system with time series data including electrical current, temperature, and speed. The target is a fault condition — either a shutdown or loss of grip. There are some missing values. What ML approach do you recommend and why?"*
+"I have a dataset from a robotic system with time series data including electrical current, temperature, and speed. The target is a fault condition — either a shutdown or loss of grip. There are some missing values. What ML approach do you recommend and why?"
 
 ---
 
@@ -78,7 +78,7 @@ This is a classic class imbalance problem. The dataset has approximately 1,358 n
 ### Prompts & LLM Discussion
 After reviewing the Model 1 confusion matrix, the following was discussed with the LLM:
 
-> *"The model is predicting Normal for almost everything and missing nearly all faults. How do I fix class imbalance in a MATLAB random forest?"*
+"The model is predicting Normal for almost everything and missing nearly all faults. How do I fix class imbalance in a MATLAB random forest?"
 
 The LLM recommended using a cost matrix to penalize missed faults heavily, increasing the window size for trend features to better capture fault buildup, and tuning hyperparameters to allow deeper trees that can learn from rare fault events.
 
