@@ -4,8 +4,9 @@ Course: MCEN 3030
 Dataset: dataset_02052023.xlsx — Robot sensor time series data (current, temperature, speed across 6 joints)
 
 Problem Description
+
 This project uses machine learning to predict robot faults from sensor data. A robotic system records electrical current, temperature, and speed across six joints over time. The target variable is a fault condition — either a protective shutdown or a loss of grip. The goal is to train a classifier that can predict these faults from the sensor history, which could allow for early intervention before a fault occurs.
-The dataset contains 7,409 time-series readings with 19 sensor features and approximately 54 missing values scattered across sensor columns.
+
 
 Deliverable 1 — Initial Prompt
 The following prompt was used to begin the LLM-assisted design process:
@@ -72,10 +73,7 @@ MetricModel 1Model 2GripLost detected4.7%96.9%Shutdown detected0%95.9%Normal acc
 Normal accuracy dropped from 100% to 76.7%, meaning some normal readings are now flagged as faults. However, for a robot safety system this is the correct tradeoff — a false alarm is far less dangerous than a missed shutdown or grip loss event. The cost matrix worked exactly as intended.
 
 Deliverable 5 — Feature Importance
-Feature Importance Plot
-Show Image
-Discussion
-Most important positive features:
+
 
 Temperature_J2 and Current_J2 — Joint 2 is the dominant predictor across both models. This suggests Joint 2 experiences the most distinctive sensor behavior in the lead-up to fault events
 Rolling means of current and temperature across multiple joints — trend history over time is more predictive than raw instantaneous readings, confirming the value of the trend feature engineering
