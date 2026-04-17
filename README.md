@@ -1,8 +1,7 @@
 # Robot Fault Prediction - MCEN 3030 ML Project
 **Author:** Nick Parkes  
 **Course:** MCEN 3030  
-**Dataset:** dataset_02052023.xlsx — Robot sensor time series data (current, temperature, speed across 6 joints)
-
+**Dataset:** Dataset provided by MCEN 3030 course
 ---
 
 ## Problem Description
